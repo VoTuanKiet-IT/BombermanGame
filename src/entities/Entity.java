@@ -2,6 +2,7 @@ package entities;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 
 public abstract class Entity {
     
@@ -20,5 +21,6 @@ public abstract class Entity {
 
     // Bắt buộc các lớp con phải ghi đè 2 hàm này
     public abstract void update();
+    public BufferedImage image;
     public abstract void draw(Graphics2D g2);
 }

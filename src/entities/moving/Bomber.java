@@ -3,9 +3,11 @@ package entities.moving;
 import entities.Entity;
 import input.KeyHandler;
 import main.GamePanel;
-import java.awt.Color;
+//import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import javax.imageio.ImageIO;
+import java.io.IOException;
 
 public class Bomber extends Entity {
     
@@ -33,6 +35,7 @@ public class Bomber extends Entity {
         solidAreaDefaultY = solidArea.y;
         
         setDefaultValues();
+        getPlayerImage();
     }
 
     // Đặt vị trí và tốc độ khởi điểm cho Bomber
@@ -43,6 +46,14 @@ public class Bomber extends Entity {
         direction = "down";
     }
 
+    public void getPlayerImage() {
+        try {
+            image = ImageIO.read(getClass().getResourceAsStream("/res/bomber_down.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
     @Override
     public void update() {
         if (bombCooldown > 0) {
@@ -82,20 +93,30 @@ public class Bomber extends Entity {
             }
         }
     }
-
     @Override
     public void draw(Graphics2D g2) {
-        g2.setColor(Color.BLUE);
-        
-        // Khai báo khoảng lùi (offset) để thu nhỏ nhân vật
-        // Ví dụ: lùi vào 8 pixel từ mỗi cạnh
-        int offset = 8; 
-        
-        // Tính toán kích thước mới của khối vuông
+        // XÓA ĐOẠN VẼ KHỐI MÀU XANH CŨ ĐI
+        // Thay bằng lệnh vẽ hình ảnh:
+        int offset = 8;
         int width = gp.tileSize - (offset * 2);
         int height = gp.tileSize - (offset * 2);
-        
-        // Vẽ khối vuông với tọa độ x, y được cộng thêm khoảng lùi để nó nằm giữa ô
-        g2.fillRect(x + offset, y + offset, width, height);
+
+        g2.drawImage(image, x + offset, y + offset, width, height, null);
     }
+
+//    @Override
+//    public void draw(Graphics2D g2) {
+//        g2.setColor(Color.BLUE);
+//        
+//        // Khai báo khoảng lùi (offset) để thu nhỏ nhân vật
+//        // Ví dụ: lùi vào 8 pixel từ mỗi cạnh
+//        int offset = 8; 
+//        
+//        // Tính toán kích thước mới của khối vuông
+//        int width = gp.tileSize - (offset * 2);
+//        int height = gp.tileSize - (offset * 2);
+//        
+//        // Vẽ khối vuông với tọa độ x, y được cộng thêm khoảng lùi để nó nằm giữa ô
+//        g2.fillRect(x + offset, y + offset, width, height);
+//    }
 }
